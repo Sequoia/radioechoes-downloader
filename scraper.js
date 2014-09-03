@@ -17,18 +17,18 @@ request.getAsync(showPageURL)
   .then(function(args){
     var body = args[1]
     var $ = cheerio.load(body);
-  console.log('got html with title: "' + $('title').text() + '"...');
-  return $;
+    console.log('got html with title: "' + $('title').text() + '"...');
+    return $;
   })
-.then(getAllLinks)
+  .then(getAllLinks)
   .then(function(links){
     console.log('starting mp3 downloads...');
     async.eachLimit(links, 2, writeRemoteMp3);
   })
-.catch(function(e){
-  console.error(e.message);
-  process.exit(1);
-});
+  .catch(function(e){
+    console.error(e.message);
+    process.exit(1);
+  });
 
 //get all the download links on a page
 //@param Cheerio object. jquery-like $ object with document already loaded
@@ -47,21 +47,21 @@ function getAllLinks($){
 function writeRemoteMp3(downloadPageUrl, callback){
   //request the actual download page
   //console.log('requesting download page: ' + downloadPageUrl);
-	request.getAsync(baseUrl + downloadPageUrl)
-		.then(function(args){
-			var $ = cheerio.load(args[1]); //load body into cheerio
-			var mp3Url = $('[href$="mp3"]').attr('href');
-			var filename = url.parse(mp3Url).pathname.split('/').pop();
-			//request mp3
-			request(mp3Url)
-				.pipe(fs.createWriteStream(outputPath + '/' + filename))
-				.on('close',function(){
-					console.log('DOWNLOADED: ' + filename);
-					callback();
-				})
-				.on('error',function(e){
-					console.log('problem downloading: ' + filename);
-					callback(e.message);
-				});
-		});
+  request.getAsync(baseUrl + downloadPageUrl)
+    .then(function(args){
+      var $ = cheerio.load(args[1]); //load body into cheerio
+      var mp3Url = $('[href$="mp3"]').attr('href');
+      var filename = url.parse(mp3Url).pathname.split('/').pop();
+      //request mp3
+      request(mp3Url)
+        .pipe(fs.createWriteStream(outputPath + '/' + filename))
+        .on('close',function(){
+          console.log('DOWNLOADED: ' + filename);
+          callback();
+        })
+        .on('error',function(e){
+          console.log('problem downloading: ' + filename);
+          callback(e.message);
+        });
+  });
 }
