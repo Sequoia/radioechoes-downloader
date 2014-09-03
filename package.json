@@ -1,0 +1,23 @@
+{
+  "name": "radioechoes-downloader",
+  "version": "0.0.0",
+  "description": "scrape mp3s from radioEchoes.com show page",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "scrape",
+    "otr",
+    "radio",
+    "scraper"
+  ],
+  "author": "Sequoia McDowell",
+  "license": "GPL3",
+  "dependencies": {
+    "cheerio": "~0.17.0",
+    "async": "~0.9.0",
+    "bluebird": "~2.3.2",
+    "request": "~2.40.0"
+  }
+}
