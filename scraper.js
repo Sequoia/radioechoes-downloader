@@ -3,6 +3,9 @@ var cheerio = require('cheerio');
 var async = require('async');
 var fs = require('fs');
 var url = require('url');
+var ProgressBar = require('progress');
+var pad = require('string-padding');
+var filesize = require('file-size');
 //wrap these so asyncs return promises
 var request = Promise.promisifyAll(require('request'));
 
@@ -15,7 +18,7 @@ var outputPath   = 'mp3s';
 console.log('requesting page...');
 request.getAsync(showPageURL)
   .then(function(args){
-    var body = args[1]
+    var body = args[1];
     var $ = cheerio.load(body);
     console.log('got html with title: "' + $('title').text() + '"...');
     return $;
@@ -23,7 +26,7 @@ request.getAsync(showPageURL)
   .then(getAllLinks)
   .then(function(links){
     console.log('starting mp3 downloads...');
-    async.eachLimit(links, 2, writeRemoteMp3);
+    async.eachSeries(links, writeRemoteMp3);
   })
   .catch(function(e){
     console.error(e.message);
@@ -52,16 +55,33 @@ function writeRemoteMp3(downloadPageUrl, callback){
       var $ = cheerio.load(args[1]); //load body into cheerio
       var mp3Url = $('[href$="mp3"]').attr('href');
       var filename = url.parse(mp3Url).pathname.split('/').pop();
+      var bar;
       //request mp3
       request(mp3Url)
+        .on('response',function(res){
+          //setup progress bar once we know response length
+          var len = parseInt(res.headers['content-length'], 10);
+          var hrLen = pad(filesize(len).human({si:true}),10,' ',pad.RIGHT);
+
+          console.log(filename);
+          bar = new ProgressBar(hrLen + ' [:bar] :percent :etas', {
+            complete: '=',
+            incomplete: ' ',
+            width: 20,
+            total: len
+          });
+        })
+        .on('data',function(chunk){
+          bar.tick(chunk.length);
+        })
         .pipe(fs.createWriteStream(outputPath + '/' + filename))
         .on('close',function(){
-          console.log('DOWNLOADED: ' + filename);
           callback();
         })
         .on('error',function(e){
           console.log('problem downloading: ' + filename);
           callback(e.message);
         });
+        //stream the file directly to disk
   });
 }

@@ -10,10 +10,11 @@ The repository comes with an empty `mp3s` directory, where the mp3s will end up.
 The filenames will be reported as they are downloaded; when all files are downloaded the script will exit.
 
 ## Todo
-* Externalize the show name so it can get other shows from RadioEchoes
-* Add bit to create mp3 directory as needed & remove it from repo
-* Create a menu to enable selection of a show archive to download (based on [the menu here](http://www.radioechoes.com/programs))
-* Rewrite it all as one big stream chain
+- [x] Progress bar
+- [ ] Externalize the show name so it can get other shows from RadioEchoes
+- [ ] Add bit to create mp3 directory as needed & remove it from repo
+- [ ] Create a menu to enable selection of a show archive to download (based on [the menu here](http://www.radioechoes.com/programs))
+- [ ] Rewrite it all as one big stream chain
 
 ## License
 GPL 3... million
