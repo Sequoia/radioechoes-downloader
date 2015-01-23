@@ -2,6 +2,7 @@ var Promise = require('bluebird');
 var cheerio = require('cheerio');
 var async = require('async');
 var fs = require('fs');
+var path = require('path');
 var url = require('url');
 var ProgressBar = require('progress');
 var pad = require('string-padding');
@@ -10,28 +11,37 @@ var filesize = require('file-size');
 var request = Promise.promisifyAll(require('request'));
 
 var baseUrl      = 'http://www.radioechoes.com';
+//"series" page. The listing page for the show
 var showPagePath = '/the-burkiss-way'; //@todo externalize
 var showPageURL  = baseUrl + showPagePath;
+
+// generally better to be explicit
+// path.join(__dirname, "mp3s");
 var outputPath   = 'mp3s';
 
 //get the HTML for the page
 console.log('requesting page...');
+
 request.getAsync(showPageURL)
-  .then(function(args){
-    var body = args[1];
-    var $ = cheerio.load(body);
-    console.log('got html with title: "' + $('title').text() + '"...');
-    return $;
-  })
+  .then(getBody)
   .then(getAllLinks)
-  .then(function(links){
-    console.log('starting mp3 downloads...');
-    async.eachSeries(links, writeRemoteMp3);
-  })
+  .then(downloadLinks)
   .catch(function(e){
     console.error(e.message);
     process.exit(1);
   });
+
+function getBody(args) {
+  var body = args[1];
+  var $ = cheerio.load(body);
+  console.log('got html with title: "' + $('title').text() + '"...');
+  return $;
+}
+
+function downloadLinks(links){
+  console.log('starting mp3 downloads...');
+  async.eachSeries(links, writeRemoteMp3);
+}
 
 //get all the download links on a page
 //@param Cheerio object. jquery-like $ object with document already loaded
@@ -54,7 +64,7 @@ function writeRemoteMp3(downloadPageUrl, callback){
     .then(function(args){
       var $ = cheerio.load(args[1]); //load body into cheerio
       var mp3Url = $('[href$="mp3"]').attr('href');
-      var filename = url.parse(mp3Url).pathname.split('/').pop();
+      var filename = path.basename(url.parse(mp3Url).pathname);
       var bar;
       //request mp3
       request(mp3Url)
@@ -74,7 +84,9 @@ function writeRemoteMp3(downloadPageUrl, callback){
         .on('data',function(chunk){
           bar.tick(chunk.length);
         })
-        .pipe(fs.createWriteStream(outputPath + '/' + filename))
+        // more cuteness here
+        // path.join(outputPath, filename)
+        .pipe(fs.createWriteStream(path.join(outputPath,filename)))
         .on('close',function(){
           callback();
         })
