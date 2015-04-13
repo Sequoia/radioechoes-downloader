@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var download = require('./scraper.js');
 
 //first arg: 
