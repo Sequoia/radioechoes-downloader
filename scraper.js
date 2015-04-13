@@ -4,6 +4,7 @@ var async = require('async');
 var fs = require('fs');
 var url = require('url');
 var path = require('path');
+var mkdirp = require('mkdirp');
 var chalk = require('chalk');
 var ProgressBar = require('progress');
 var pad = require('string-padding');
@@ -12,15 +13,18 @@ var filesize = require('file-size');
 var request = Promise.promisifyAll(require('request'));
 
 var baseUrl      = 'http://www.radioechoes.com';
-var outputPath   = 'mp3s';
+var outputPath   = null;
 
 module.exports = download;
 
 /**
  * gets listing of MP3s & downloads them
  * @param String showPageSlug
+ * @param String outputDir
  */
-function download(showPagePath){
+function download(showPagePath, outputDir){
+  outputPath = path.join(outputDir, showPagePath);
+  mkdirp(outputPath);
   //get the HTML for the page
   console.log('requesting page...');
   request.getAsync(url.resolve(baseUrl,showPagePath))
