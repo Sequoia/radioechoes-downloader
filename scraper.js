@@ -4,6 +4,10 @@ var async = require('async');
 var fs = require('fs');
 var url = require('url');
 var path = require('path');
+var chalk = require('chalk');
+var ProgressBar = require('progress');
+var pad = require('string-padding');
+var filesize = require('file-size');
 //wrap these so asyncs return promises
 var request = Promise.promisifyAll(require('request'));
 
@@ -67,9 +71,25 @@ function writeRemoteMp3(downloadPageUrl, callback){
       var $ = cheerio.load(args[1]); //load body into cheerio
       var mp3Url = $('[href$="mp3"]').attr('href');
       var filename = path.basename(mp3Url);
-      console.log('downloading ' + filename);
+      var bar; //this is a progress bar, not a dummy variable :)
       //request mp3 (DIRECT CALL TO `request` NOT PROMISIFIED (for streaming)
       request(mp3Url)
+        .on('response',function(res){
+          //setup progress bar once we know response length
+          var len = parseInt(res.headers['content-length'], 10);
+          var hrLen = pad(filesize(len).human({si:true}),10,' ',pad.RIGHT);
+
+          console.log(chalk.cyan(filename));
+          bar = new ProgressBar(hrLen + ' [:bar] :percent :etas', {
+            complete: '=',
+            incomplete: ' ',
+            width: 20,
+            total: len
+          });
+        })
+        .on('data',function(chunk){
+          bar.tick(chunk.length);
+        })
         //stream the file directly to disk
         .pipe(fs.createWriteStream(path.join(outputPath, filename)))
         .on('close',function(){
@@ -79,5 +99,5 @@ function writeRemoteMp3(downloadPageUrl, callback){
           console.error('problem downloading: ' + filename);
           callback(e.message);
         });
-  });
+    });
 }

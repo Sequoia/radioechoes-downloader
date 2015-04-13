@@ -14,9 +14,13 @@
   "author": "Sequoia McDowell",
   "license": "GPL3",
   "dependencies": {
-    "cheerio": "~0.17.0",
     "async": "~0.9.0",
     "bluebird": "~2.3.2",
-    "request": "~2.40.0"
+    "chalk": "^1.0.0",
+    "cheerio": "~0.17.0",
+    "file-size": "0.0.5",
+    "progress": "~1.1.8",
+    "request": "~2.40.0",
+    "string-padding": "~1.0.2"
   }
 }
