@@ -2,7 +2,21 @@
 var minimist = require('minimist');
 var download = require('./scraper.js');
 
-var argv = minimist(process.argv.slice(2));
+var opts = {};
+
+opts.alias = {
+  out   : 'o',
+  skip  : 's',
+  get   : 'n'
+};
+
+opts.default = {
+  out   : '.',
+  skip  : 0,
+  get   : 10
+};
+
+var argv = minimist(process.argv.slice(2), opts);
 
 var showPagePath = argv._[0]; //first unnamed argument
 var outputDir    = argv.out;

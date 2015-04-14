@@ -11,14 +11,20 @@ I decided to use this project as the basis for a talk with tags as steps & I don
 ### Arguments
 * show slug: e.g. `a-day-in-the-life-of-dennis-day` for `http://www.radioechoes.com/a-day-in-the-life-of-dennis-day`
 ### Switches
-* `out`: where to create show directory (if it doesn't exist)
-* `skip`: offset-- how many to skip (`0` to start with first show i.e. skip none)
-* `get`: how many files to download
+* `out` *default: `.`*: where to create show directory (if it doesn't exist)
+* `skip` *default: `0`*:  offset-- how many to skip (`0` to start with first show i.e. skip none)
+* `get` *default: `10`*: how many files to download
 
-## Example
+## Examples
 Download the first 10 Burkiss Ways
 ```sh
 $ ./index.js the-burkiss-way --out . --skip 0 --get 10
+# which is the same as...
+$ ./index.js the-burkiss-way
+```
+Download episodes 11-20 of The Six Shooter
+```sh
+$ ./index.js the-six-shooter -s10
 ```
 
 ## License
