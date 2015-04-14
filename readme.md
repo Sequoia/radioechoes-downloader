@@ -10,12 +10,18 @@ I decided to use this project as the basis for a talk with tags as steps & I don
 
 ### Arguments
 * show slug: e.g. `a-day-in-the-life-of-dennis-day` for `http://www.radioechoes.com/a-day-in-the-life-of-dennis-day`
+
 ### Switches
 * `out` *default: `.`*: where to create show directory (if it doesn't exist)
 * `skip`: offset-- how many to skip (`0` to start with first show i.e. skip none)
 * `get`: how many files to download
 
-:information_source: skip & get will be requested if not passed as switches
+### `.radorc`
+Any of the options that can be passed as switches may also be set in a `.radorc`
+file in any of the [usual `rc` file locations](https://github.com/dominictarr/rc#standards). 
+See `.radorc.example`
+
+:information_source: `skip` & `get` will be requested if not passed as switches
 
 ## Examples
 Download the first 10 Burkiss Ways

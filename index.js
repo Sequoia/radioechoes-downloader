@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 var minimist = require('minimist');
 var inquirer = require('inquirer');
+var superenv = require('superenv');
+var path     = require('path-extra');
 var _        = require('lodash');
 var download = require('./scraper.js');
 
@@ -12,11 +14,16 @@ opts.alias = {
   get   : 'n'
 };
 
-opts.default = {
+//must merge defaults AFTER reading .rc file
+var defaults = {
   out   : '.'
 };
 
-var argv = minimist(process.argv.slice(2), opts);
+var argv = _.defaults(
+  minimist(process.argv.slice(2), opts),
+  superenv('rado'),
+  defaults
+);
 
 var prompts = [];
 
@@ -39,6 +46,9 @@ if(typeof argv.get === 'undefined'){
   });
 }
 
+//path loaded from .rc file not automatically expanded
+argv.out = expandTilde(argv.out);
+
 //prompt if any prompts are present
 if(prompts.length){
   inquirer.prompt(prompts,function(answers){
@@ -56,3 +66,8 @@ function runDownload(argv){
 
   download(showPagePath, outputDir, skip, howmany);
 }
+
+function expandTilde(pathStr){
+  return pathStr.replace(/^~/, path.homedir());
+}
+

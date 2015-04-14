@@ -38,7 +38,7 @@ function download(showPagePath, outputDir, skip, howmany){
     })
     .then(getAllLinks)
     .then(function(links){
-      console.log('starting mp3 downloads...');
+      console.log('downloading mp3s to ' + chalk.green(outputPath));
       //reduce list to the number selected
       links = links.slice(skip, skip+howmany);
       async.eachSeries(links, writeRemoteMp3);
