@@ -6,7 +6,19 @@ I decided to use this project as the basis for a talk with tags as steps & I don
 
 ## Usage
 :warning: Changes from step to step, watch the talk @todo link to talk :warning:
-Will update in the end
+:point_right: Will update in the end
+
+`./index.js <show-slug> <output-dir> <skip> <howmany>
+
+* `show slug`: e.g. `a-day-in-the-life-of-dennis-day` for `http://www.radioechoes.com/a-day-in-the-life-of-dennis-day`
+* `skip`: offset-- how many to skip (`0` to start with first show i.e. skip none)
+* `howmany`: how many files to download
+
+## Example
+Download the first 10 Burkiss Ways
+```sh
+$ ./index.js the-burkiss-way . 0 10
+```
 
 ## License
 GPL 3

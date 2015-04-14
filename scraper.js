@@ -21,8 +21,10 @@ module.exports = download;
  * gets listing of MP3s & downloads them
  * @param String showPageSlug
  * @param String outputDir
+ * @param Number skip - number of tracks to skip (offset basically)
+ * @param Number howmany - number of tracks to download
  */
-function download(showPagePath, outputDir){
+function download(showPagePath, outputDir, skip, howmany){
   outputPath = path.join(outputDir, showPagePath);
   mkdirp(outputPath);
   //get the HTML for the page
@@ -37,6 +39,8 @@ function download(showPagePath, outputDir){
     .then(getAllLinks)
     .then(function(links){
       console.log('starting mp3 downloads...');
+      //reduce list to the number selected
+      links = links.slice(skip, skip+howmany);
       async.eachSeries(links, writeRemoteMp3);
     })
     .catch(function(e){
