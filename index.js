@@ -1,9 +1,12 @@
 #!/usr/bin/env node
+var minimist = require('minimist');
 var download = require('./scraper.js');
 
-var showPagePath = process.argv[2];
-var outputDir    = process.argv[3];
-var skip         = parseInt(process.argv[4]);
-var howmany      = parseInt(process.argv[5]);
+var argv = minimist(process.argv.slice(2));
+
+var showPagePath = argv._[0]; //first unnamed argument
+var outputDir    = argv.out;
+var skip         = parseInt(argv.skip);
+var howmany      = parseInt(argv.get);
 
 download(showPagePath, outputDir, skip, howmany);

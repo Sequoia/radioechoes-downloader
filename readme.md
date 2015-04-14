@@ -8,16 +8,17 @@ I decided to use this project as the basis for a talk with tags as steps & I don
 :warning: Changes from step to step, watch the talk @todo link to talk :warning:
 :point_right: Will update in the end
 
-`./index.js <show-slug> <output-dir> <skip> <howmany>
-
-* `show slug`: e.g. `a-day-in-the-life-of-dennis-day` for `http://www.radioechoes.com/a-day-in-the-life-of-dennis-day`
+### Arguments
+* show slug: e.g. `a-day-in-the-life-of-dennis-day` for `http://www.radioechoes.com/a-day-in-the-life-of-dennis-day`
+### Switches
+* `out`: where to create show directory (if it doesn't exist)
 * `skip`: offset-- how many to skip (`0` to start with first show i.e. skip none)
-* `howmany`: how many files to download
+* `get`: how many files to download
 
 ## Example
 Download the first 10 Burkiss Ways
 ```sh
-$ ./index.js the-burkiss-way . 0 10
+$ ./index.js the-burkiss-way --out . --skip 0 --get 10
 ```
 
 ## License
