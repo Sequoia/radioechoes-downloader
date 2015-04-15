@@ -2,6 +2,7 @@ var Promise = require('bluebird');
 var cheerio = require('cheerio');
 var async = require('async');
 var fs = require('fs');
+var _ = require('lodash');
 var url = require('url');
 var path = require('path');
 var mkdirp = require('mkdirp');
@@ -15,7 +16,38 @@ var request = Promise.promisifyAll(require('request'));
 var baseUrl      = 'http://www.radioechoes.com';
 var outputPath   = null;
 
-module.exports = download;
+module.exports = {
+  download : download,
+  search   : search
+};
+
+/**
+ * get array of shows with titles that contain the search term
+ * @param string
+ * @return Promise resolves with the array of shows
+ */
+function search(term){
+  return request.getAsync(baseUrl)
+    .then(function(args){
+      var $ = cheerio.load(args[1]);
+      var shows = [];
+      $('.seriesItem').each(function(i, el){
+        $el = $(el);
+        //array of ALL shows
+        shows.push({
+          title : $el.find('.seriesName').text(),
+          slug  : $el.attr('series'),
+          genre : $el.attr('genre'),
+          episodes: $el.find('.episodeCount').text()
+        });
+      });
+      //filter to just matching shows
+      var matches = _.filter(shows,function(show){
+        return _.contains(show.title.toLowerCase(), term.toLowerCase());
+      });
+      return matches;
+    });
+}
 
 /**
  * gets listing of MP3s & downloads them

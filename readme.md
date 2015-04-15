@@ -25,6 +25,12 @@ See `.radorc.example`
 
 :information_source: `skip` & `get` will be requested if not passed as switches
 
+## `search`
+Search for shows by title & output info about those shows
+
+### Arguments
+* search string: word/term to search for. show title is searched, case insensitive
+
 ## Examples
 Download the first 10 Burkiss Ways
 ```sh
@@ -37,6 +43,14 @@ $ ./rado.js download the-burkiss-way
 Download episodes 11-20 of The Six Shooter
 ```sh
 $ ./rado.js download the-six-shooter -s 10 -n 10
+```
+Search for shows with "shoot" in the title
+```sh
+$ ./rado.js search shoot
+```
+Search for "space patrol"
+```sh
+$ ./rado.js search "space patrol"
 ```
 
 ## License

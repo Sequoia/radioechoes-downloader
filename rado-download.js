@@ -4,7 +4,7 @@ var inquirer = require('inquirer');
 var superenv = require('superenv');
 var path     = require('path-extra');
 var _        = require('lodash');
-var download = require('./scraper.js');
+var download = require('./scraper.js').download;
 
 program
   .option('-o, --out <path>','where to create show directory')
