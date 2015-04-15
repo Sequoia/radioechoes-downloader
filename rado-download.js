@@ -1,18 +1,16 @@
 #!/usr/bin/env node
-var minimist = require('minimist');
+var program  = require('commander');
 var inquirer = require('inquirer');
 var superenv = require('superenv');
 var path     = require('path-extra');
 var _        = require('lodash');
 var download = require('./scraper.js');
 
-var opts = {};
-
-opts.alias = {
-  out   : 'o',
-  skip  : 's',
-  get   : 'n'
-};
+program
+  .option('-o, --out <path>','where to create show directory')
+  .option('-s, --skip <n>','how many episodes to skip (offset)')
+  .option('-n, --get <n>','how many episodes to download')
+  .parse(process.argv);
 
 //must merge defaults AFTER reading .rc file
 var defaults = {
@@ -20,7 +18,7 @@ var defaults = {
 };
 
 var argv = _.defaults(
-  minimist(process.argv.slice(2), opts),
+  program,
   superenv('rado'),
   defaults
 );
@@ -46,9 +44,6 @@ if(typeof argv.get === 'undefined'){
   });
 }
 
-//path loaded from .rc file not automatically expanded
-argv.out = expandTilde(argv.out);
-
 //prompt if any prompts are present
 if(prompts.length){
   inquirer.prompt(prompts,function(answers){
@@ -59,8 +54,9 @@ if(prompts.length){
 }
 
 function runDownload(argv){
-  var showPagePath = argv._[0]; //first unnamed argument
-  var outputDir    = argv.out;
+  var showPagePath = argv.args[0]; //first unnamed argument
+  //path loaded from .rc file not automatically expanded
+  var outputDir    = expandTilde(argv.out);
   var skip         = parseInt(argv.skip);
   var howmany      = parseInt(argv.get);
 

@@ -4,9 +4,11 @@ I wanted all the [The Burkiss Way](https://en.wikipedia.org/wiki/The_Burkiss_Way
 ## Later on...
 I decided to use this project as the basis for a talk with tags as steps & I don't keep the readme up to date on each step. As such the readme **may/will be inaccurate** 'til the end when I'll update it all to reflect the state of the project.
 
-## Usage
+# Commands
 :warning: Changes from step to step, watch the talk @todo link to talk :warning:
 :point_right: Will update in the end
+
+## `download`
 
 ### Arguments
 * show slug: e.g. `a-day-in-the-life-of-dennis-day` for `http://www.radioechoes.com/a-day-in-the-life-of-dennis-day`
@@ -26,15 +28,15 @@ See `.radorc.example`
 ## Examples
 Download the first 10 Burkiss Ways
 ```sh
-$ ./index.js the-burkiss-way --out . --skip 0 --get 10
+$ ./rado.js download the-burkiss-way --out . --skip 0 --get 10
 ```
 This will prompt you for how many to skip & how many to get
 ```sh
-$ ./index.js the-burkiss-way
+$ ./rado.js download the-burkiss-way
 ```
 Download episodes 11-20 of The Six Shooter
 ```sh
-$ ./index.js the-six-shooter -s10 -n10
+$ ./rado.js download the-six-shooter -s 10 -n 10
 ```
 
 ## License
