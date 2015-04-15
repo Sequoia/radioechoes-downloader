@@ -3,10 +3,13 @@
   "version": "0.0.1",
   "description": "scrape mp3s from radioEchoes.com show page",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dox": "./scripts/build-man-pages.js"
   },
   "bin": {
-    "rado" : "rado.js"
+    "rado" : "./rado.js"
+  },
+  "directories": {
+    "man": "man"
   },
   "keywords": [
     "scrape",
@@ -33,5 +36,8 @@
     "request": "~2.40.0",
     "string-padding": "~1.0.2",
     "superenv": "0.0.1"
+  },
+  "devDependencies": {
+    "marked-man": "^0.1.4"
   }
 }

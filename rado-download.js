@@ -71,17 +71,5 @@ function expandTilde(pathStr){
 }
 
 function printHelp(){
-  var cmd = program._name.replace('-',' ');
-  console.log('This command identifies a show by it\'s "slug", or the last part of the show page\'s URL');
-  console.log('For example, to download shows listed on http://www.radioechoes.com/alka-seltzer-time, use:');
-  console.log('  $ %s alka-seltzer-time', cmd);
-  console.log('');
-  console.log('Examples');
-  console.log('');
-  console.log(' Download Space Patrol, prompt for how many to d/l & skip');
-  console.log('  $ %s space-patrol', cmd);
-  console.log(' Download the 11th episode of The Burkiss Way');
-  console.log('  $ %s the-burkiss-way -s 10 -n 1', cmd);
-  console.log(' Download the first three episodes of The Six Shooter to your home directory');
-  console.log('  $ %s the-burkiss-way --skip 0 --get 3 --out ~', cmd);
+  console.log('`man %s` for more info about this program',program._name);
 }

@@ -1,0 +1,71 @@
+.TH "RADO\-DOWNLOAD" "1" "April 2015" "" ""
+.SH "NAME"
+\fBrado-download\fR \- download shows in batch
+.SH SYNOPSIS
+.P
+.RS 2
+.nf
+rado download <slug> [\-\-out path] [\-\-skip offset] [\-\-get number]
+.fi
+.RE
+.SH DESCRIPTION
+.P
+This command identifies a show by it's "\fBslug\fR", or the last part of the show page's URL
+For example, to download shows listed on http://www\.radioechoes\.com/alka\-seltzer\-time, use:
+.P
+A directory is created in the output path for each series, based on the slug\.
+.SH OPTIONS
+.P
+\fB\-o, \-\-out <path>\fR
+    where to create show directory (if it doesn't exist)\. defaults to \fB\|\.\fR\|\.
+.P
+\fB\-s, \-\-skip <offset>\fR
+    how many to skip (\fB0\fR to start with first show i\.e\. skip none)
+    If not specified the user will be prompted for this value\.
+.P
+\fB\-n, \-\-get <n>\fR
+    how many files to download\.
+    If not specified the user will be prompted for this value\.
+.SH CONFIGURATION
+.P
+All options for \fBrado download\fR may be specified in \fB\|\.radorc\fR\|\. Example:
+.P
+.RS 2
+.nf
+# Always put tracks where Songbird can find them
+out=~/Music
+.fi
+.RE
+.SH EXAMPLES
+.P
+Download Space Patrol, prompt for how many to d/l & skip
+.P
+.RS 2
+.nf
+$ rado download space\-patrol
+.fi
+.RE
+.P
+Download the 11th episode of The Burkiss Way
+.P
+.RS 2
+.nf
+$ rado download the\-burkiss\-way \-s 10 \-n 1
+.fi
+.RE
+.P
+Download the first three episodes of The Six Shooter to your home directory
+.P
+.RS 2
+.nf
+$ rado download the\-burkiss\-way \-\-skip 0 \-\-get 3 \-\-out ~
+.fi
+.RE
+.P
+This will prompt you for how many to skip & how many to get
+.P
+.RS 2
+.nf
+$ \./rado\.js download the\-burkiss\-way
+.fi
+.RE

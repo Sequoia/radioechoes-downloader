@@ -1,0 +1,37 @@
+.TH "RADO" "1" "April 2015" "" ""
+.SH "NAME"
+\fBrado\fR \- find & download OTR programs
+.SH SYNOPSIS
+.P
+.RS 2
+.nf
+rado <command> [options]
+.fi
+.RE
+.SH DESCRIPTION
+.P
+This tool allows you to find & download old time radio shows available on
+radioechoes\.com\. You can specify how which show to download and how many
+episodes\. See the \fBdocs/\fR directory or the manpages for each command for more
+info about those commands and their usage\.
+.SH COMMANDS
+.P
+\fBdownload <slug> [options]\fR
+  Download shows\. See \fBrado help download\fR for more
+.P
+\fBsearch <search_term>\fR
+  Search for shows\. See \fBrado help search\fR for more
+.SH ABOUT
+.P
+I wanted all the The Burkiss Way \fIhttps://en\.wikipedia\.org/wiki/The_Burkiss_Way\fR 
+mp3s from RadioEchoes\.com \fIhttp://radioechoes\.com\fR\|\.  In order to get the mp3 
+urls from the show page, one must click "download mp3", which opens a \fIsecond\fR
+page (typically in overlay), and that second page has the link\.  So I wrote this simple scraper\.
+.SH LICENSE
+.P
+GPL 3
+.SH CREDITS
+.P
+by Sequoia McDowell
+.P
+Special thanks to duchess & the entire honeyhole team, without whom this wouldn't have been possible

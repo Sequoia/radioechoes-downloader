@@ -11,8 +11,6 @@ program
   .parse(process.argv);
 
 function printHelp(){
-  console.log('See help on each command for usage examples for that command');
-  console.log('  $ %s help search', program._name);
-  console.log('  ~or~');
-  console.log('  $ %s search --help', program._name);
+  console.log('See --help on each command for usage examples for that command');
+  console.log('`man rado` for more info about this program');
 }

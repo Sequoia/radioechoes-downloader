@@ -29,9 +29,5 @@ function printResults(shows){
 }
 
 function printHelp(){
-  var cmd = program._name.replace('-',' ');
-  console.log('Examples');
-  console.log('');
-  console.log('  $ %s shoot', cmd);
-  console.log('  $ %s "space patrol"', cmd);
+  console.log('`man %s` for more info about this program',program._name);
 }
