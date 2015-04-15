@@ -5,6 +5,9 @@ var search   = require('./scraper.js').search;
 var Table = require('cli-table');
  
 program
+  .usage('<string>')
+  .description('Search for shows by title')
+  .on('--help', printHelp)
   .parse(process.argv);
 
 search(program.args[0])
@@ -23,4 +26,12 @@ function printResults(shows){
 
   table.options.colWidths = [20,14,5,longestSlug+2];
   console.log(table.toString());
+}
+
+function printHelp(){
+  var cmd = program._name.replace('-',' ');
+  console.log('Examples');
+  console.log('');
+  console.log('  $ %s shoot', cmd);
+  console.log('  $ %s "space patrol"', cmd);
 }
