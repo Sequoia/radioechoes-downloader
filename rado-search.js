@@ -2,17 +2,25 @@
 var program  = require('commander');
 var _        = require('lodash');
 var search   = require('./scraper.js').search;
-var chalk    = require('chalk');
-
+var Table = require('cli-table');
+ 
 program
   .parse(process.argv);
 
 search(program.args[0])
-  .then(function(shows){
-    shows.forEach(function(show){
-      console.log(chalk.blue.bold(show.title));
-      console.log('slug: %s', show.slug);
-      console.log('genre: %s', show.genre);
-      console.log('number of episodes available: %s', show.episodes);
-    });
+  .then(printResults);
+
+function printResults(shows){
+  var table = new Table({
+    head: ['Title', 'Genre', 'eps', 'Slug']
   });
+  var longestSlug = 0;
+
+  shows.forEach(function(show){
+    longestSlug = Math.max(show.slug.length, longestSlug);
+    table.push([ show.title, show.genre, show.episodes, show.slug ]);
+  });
+
+  table.options.colWidths = [20,14,5,longestSlug+2];
+  console.log(table.toString());
+}
