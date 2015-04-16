@@ -1,7 +1,7 @@
 {
-  "name": "radioechoes-downloader",
+  "name": "rado",
   "version": "0.0.1",
-  "description": "scrape mp3s from radioEchoes.com show page",
+  "description": "scrape mp3s from radioEchoes.com",
   "scripts": {
     "dox": "./scripts/build-man-pages.js"
   },
@@ -17,7 +17,22 @@
     "radio",
     "scraper"
   ],
-  "author": "Sequoia McDowell",
+  "author": "Sequoia McDowell <sequoia.mcdowell@gmail.com> (http://sequoia.makes.software/)",
+  "contributors": [
+    {
+      "name" : "Naomi Kyoto",
+      "url"  : "https://github.com/naomik"
+    }
+  ],
+  "bugs" : "https://github.com/Sequoia/radioechoes-downloader/issues",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Sequoia/radioechoes-downloader"
+  },
+  "homepage": "https://github.com/Sequoia/radioechoes-downloader",
+  "engines" : {
+    "node" : ">=0.12"
+  },
   "license": "GPL3",
   "dependencies": {
     "async": "~0.9.0",
