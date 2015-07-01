@@ -121,8 +121,8 @@ function writeRemoteMp3(downloadPageUrl, callback){
 
           console.log(chalk.cyan(filename));
           bar = new ProgressBar(hrLen + ' [:bar] :percent :etas', {
-            complete: '=',
-            incomplete: ' ',
+            complete: '🐠',
+            incomplete: '🌊',
             width: 20,
             total: len
           });
